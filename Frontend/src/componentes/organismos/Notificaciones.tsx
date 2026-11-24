@@ -13,7 +13,7 @@ export function Notificaciones() {
   if (lista.length === 0) return null;
 
   return (
-    <div className="notificaciones">
+    <div className="notificaciones" role="region" aria-label="Notificaciones" aria-live="polite">
       {lista.map((notificacion) => (
         <ItemNotificacion key={notificacion.id} notificacion={notificacion} />
       ))}
