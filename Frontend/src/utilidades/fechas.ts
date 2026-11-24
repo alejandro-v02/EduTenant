@@ -51,7 +51,9 @@ export function hoyISO(): string {
 
 /** Para marcas de tiempo completas (fecha + hora), ej. "hace 5 min", "hace 3 h". */
 export function formatearTiempoRelativo(fechaHoraIso: string): string {
-  const segundos = Math.max(0, (Date.now() - new Date(fechaHoraIso).getTime()) / 1000);
+  const marcaTiempo = new Date(fechaHoraIso).getTime();
+  if (!Number.isFinite(marcaTiempo)) return 'Fecha no disponible';
+  const segundos = Math.max(0, (Date.now() - marcaTiempo) / 1000);
   if (segundos < 60) return 'justo ahora';
   const minutos = Math.floor(segundos / 60);
   if (minutos < 60) return `hace ${minutos} min`;
