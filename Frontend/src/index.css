@@ -1622,8 +1622,8 @@ h1, h2, h3 {
 /* Notificaciones: esquina inferior derecha (lado opuesto al sidebar, que va a la izquierda) */
 .notificaciones {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  right: max(24px, env(safe-area-inset-right));
   z-index: var(--z-toast);
   display: flex;
   flex-direction: column-reverse;
@@ -1725,9 +1725,9 @@ h1, h2, h3 {
 
 @media (max-width: 640px) {
   .notificaciones {
-    left: 16px;
-    right: 16px;
-    bottom: 16px;
+    left: max(16px, env(safe-area-inset-left));
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
     width: auto;
   }
 }
