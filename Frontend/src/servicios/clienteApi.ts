@@ -31,8 +31,11 @@ interface RespuestaErrorApi {
 export function extraerMensajeError(error: unknown, mensajePorDefecto = 'Ocurrió un error inesperado.'): string {
   if (axios.isAxiosError(error)) {
     const datos = error.response?.data as RespuestaErrorApi | undefined;
-    if (Array.isArray(datos?.message)) return datos.message.join('. ');
-    if (typeof datos?.message === 'string') return datos.message;
+    if (Array.isArray(datos?.message)) {
+      const mensajes = datos.message.filter((mensaje) => mensaje.trim());
+      if (mensajes.length > 0) return mensajes.join('. ');
+    }
+    if (typeof datos?.message === 'string' && datos.message.trim()) return datos.message;
   }
   return mensajePorDefecto;
 }
