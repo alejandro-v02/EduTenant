@@ -462,6 +462,7 @@ h1, h2, h3 {
 /* Tabla */
 .tabla-contenedor {
   overflow-x: auto;
+  overscroll-behavior-x: contain;
   border-radius: var(--radio-md);
 }
 
