@@ -22,9 +22,14 @@ export interface FechaPartes {
 /** Parsea 'YYYY-MM-DD' sin pasar por Date (evita el corrimiento de un día por zona horaria). */
 export function analizarISO(iso: string | null | undefined): FechaPartes | null {
   if (!iso) return null;
-  const partes = iso.split('-').map(Number);
-  if (partes.length !== 3 || partes.some((n) => Number.isNaN(n))) return null;
-  const [anio, mes, dia] = partes;
+  const partes = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+  if (!partes) return null;
+  const anio = Number(partes[1]);
+  const mes = Number(partes[2]);
+  const dia = Number(partes[3]);
+  const esBisiesto = anio % 4 === 0 && (anio % 100 !== 0 || anio % 400 === 0);
+  const diasPorMes = [31, esBisiesto ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  if (mes < 1 || mes > 12 || dia < 1 || dia > diasPorMes[mes - 1]) return null;
   return { anio, mes, dia };
 }
 
