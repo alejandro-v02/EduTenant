@@ -526,6 +526,7 @@ h1, h2, h3 {
 .layout {
   display: flex;
   min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .barra-lateral {
