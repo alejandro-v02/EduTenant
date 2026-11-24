@@ -42,9 +42,10 @@ export default function PaginaLogin() {
       <CampoFormulario etiqueta="Email">
         <Input
           type="email"
+          name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          autoComplete="username"
+          autoComplete="email"
           required
         />
       </CampoFormulario>
@@ -52,6 +53,7 @@ export default function PaginaLogin() {
       <CampoFormulario etiqueta="Contraseña">
         <Input
           type="password"
+          name="password"
           value={clave}
           onChange={(e) => setClave(e.target.value)}
           autoComplete="current-password"
