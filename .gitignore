@@ -1,0 +1,8 @@
+**/node_modules/
+**/dist/
+**/coverage/
+**/.vite/
+**/.claude/scheduled_tasks.lock
+**/.env
+**/.env.*
+!**/.env.example

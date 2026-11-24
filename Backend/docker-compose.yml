@@ -1,0 +1,25 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: edutenant-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: ${DB_USUARIO:-edutenant}
+      POSTGRES_PASSWORD: ${DB_CLAVE:-edutenant}
+      POSTGRES_DB: ${DB_NOMBRE:-edutenant}
+
+    ports:
+      - "${DB_PUERTO:-5432}:5432"
+
+    volumes:
+      - edutenant_postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USUARIO:-edutenant}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  edutenant_postgres_data:
