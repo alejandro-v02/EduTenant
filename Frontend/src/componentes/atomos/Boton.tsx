@@ -20,6 +20,7 @@ export function Boton({
     <button
       className={`boton boton--${variante} boton--${ancho} ${className}`.trim()}
       disabled={disabled || cargando}
+      aria-busy={cargando}
       {...resto}
     >
       {cargando ? <Spinner /> : children}
