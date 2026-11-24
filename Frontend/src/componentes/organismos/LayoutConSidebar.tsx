@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import type { LucideIcon } from 'lucide-react';
 import { Menu } from 'lucide-react';
@@ -26,6 +26,15 @@ export function LayoutConSidebar({ tituloSeccion, enlaces }: LayoutConSidebarPro
   const [perfilAbiertoManualmente, setPerfilAbiertoManualmente] = useState(false);
   const [menuMovilAbierto, setMenuMovilAbierto] = useState(false);
 
+  useEffect(() => {
+    if (!menuMovilAbierto) return;
+    function cerrarConEscape(evento: KeyboardEvent) {
+      if (evento.key === 'Escape') setMenuMovilAbierto(false);
+    }
+    document.addEventListener('keydown', cerrarConEscape);
+    return () => document.removeEventListener('keydown', cerrarConEscape);
+  }, [menuMovilAbierto]);
+
   const perfilObligatorio = Boolean(usuario && !usuario.perfilCompleto);
   const mostrarModalPerfil = perfilAbiertoManualmente || perfilObligatorio;
 
@@ -39,7 +48,11 @@ export function LayoutConSidebar({ tituloSeccion, enlaces }: LayoutConSidebarPro
 
   return (
     <div className="layout">
-      <aside className={`barra-lateral ${menuMovilAbierto ? 'barra-lateral--abierta-movil' : ''}`}>
+      <aside
+        id="navegacion-principal"
+        aria-label="Navegación principal"
+        className={`barra-lateral ${menuMovilAbierto ? 'barra-lateral--abierta-movil' : ''}`}
+      >
         <div className="barra-lateral__cabecera">
           <div className="barra-lateral__marca">
             <span className="barra-lateral__marca-icono">
@@ -78,8 +91,10 @@ export function LayoutConSidebar({ tituloSeccion, enlaces }: LayoutConSidebarPro
           <button
             type="button"
             className="barra-superior__menu-movil"
-            onClick={() => setMenuMovilAbierto(true)}
-            aria-label="Abrir menú de navegación"
+            onClick={() => setMenuMovilAbierto((abierto) => !abierto)}
+            aria-expanded={menuMovilAbierto}
+            aria-controls="navegacion-principal"
+            aria-label={menuMovilAbierto ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'}
           >
             <Menu size={19} />
           </button>
