@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useId } from 'react';
 import type { ReactNode } from 'react';
 import { X } from 'lucide-react';
 
@@ -13,6 +13,8 @@ interface ModalProps {
 
 /** Modal con fondo desenfocado y animación de expansión; cierra con Escape o clic fuera. */
 export function Modal({ titulo, onCerrar, children, bloqueado = false, ancho = 'normal' }: ModalProps) {
+  const tituloId = useId();
+
   useEffect(() => {
     if (bloqueado) return;
     function alPresionarTecla(evento: KeyboardEvent) {
@@ -28,11 +30,11 @@ export function Modal({ titulo, onCerrar, children, bloqueado = false, ancho = '
         className={`modal ${ancho === 'grande' ? 'modal--grande' : ''}`}
         role="dialog"
         aria-modal="true"
-        aria-label={titulo}
+        aria-labelledby={tituloId}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="modal__cabecera">
-          <h2>{titulo}</h2>
+          <h2 id={tituloId}>{titulo}</h2>
           {!bloqueado && (
             <button type="button" className="modal__cerrar" onClick={onCerrar} aria-label="Cerrar">
               <X size={16} />
