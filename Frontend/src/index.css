@@ -373,6 +373,7 @@ h1, h2, h3 {
   padding: 11px 14px;
   font-size: 0.875rem;
   border: 1px solid transparent;
+  overflow-wrap: anywhere;
   animation: aparecer 0.25s var(--transicion);
 }
 .alerta--error {
